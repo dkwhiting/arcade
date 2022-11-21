@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-size: 10vh;
+}
+
+#board {
+  width: 600px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.box {
+  width: 200px;
+  height: 200px;
+  border: 1px black solid;
+  flex-shrink: none;
+  font-size: 10em;
+  text-align: center;
+}

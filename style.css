@@ -1,29 +1,121 @@
-* {
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Damion&display=swap');
+
+/* * {
   box-sizing: border-box;
-}
+} */
 
 body {
+  font-family: sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
 }
 
 h1 {
-  font-size: 10vh;
+  font-size: 4em;
+  margin: 0;
+}
+
+h2 {
+  font-size: 3em;
+  margin: 0;
+  padding-bottom: 10px;
 }
 
 #board {
-  width: 600px;
+  background-color: black;
+  width: 320px;
   display: flex;
   flex-wrap: wrap;
+  padding: 20px;
+  border-radius: 30px;
+  color: white;
+  justify-content: center;
+  flex: 0 0 auto;
+  margin-right: 135px;
 }
 
 .box {
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   border: 1px black solid;
-  flex-shrink: none;
-  font-size: 10em;
+  font-size: 4.5em;
   text-align: center;
+  font-family: 'Permanent Marker', cursive;
+}
+
+.winner {
+  width: 100vw;
+  background-color: red;
+  font-size: 3em;
+  text-align: center;
+}
+
+main {
+  display: flex;
+  flex: 1;
+}
+
+#scoreboard {
+  background-color: lightgrey;
+  width: 80px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 30px;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#turn-arrow {
+  color: red;
+  width: 35px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 3px;
+
+  font-size: 40px;
+  font-weight: bold;
+}
+
+
+button {
+  background-color: white;
+  padding: 10px;
+  font-size: 1.25em;
+  margin: 5px;
+  border-radius: 30px;
+  border: 5px black solid;
+
+}
+
+button:hover {
+  border: 5px red solid;
+}
+
+.box {
+  border: none;
+}
+
+.s01,
+.s11,
+.s21 {
+  border-left: 3px white solid;
+  border-right: 3px white solid;
+}
+
+.s10,
+.s11,
+.s12 {
+  border-top: 3px white solid;
+  border-bottom: 3px white solid;
 }

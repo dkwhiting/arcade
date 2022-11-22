@@ -1,11 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Damion&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alexandria&family=Damion&family=Jua&family=Monoton&family=Permanent+Marker&display=swap');
 
-/* * {
-  box-sizing: border-box;
-} */
+html {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
 body {
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-image: radial-gradient(circle, rgb(95, 95, 95), rgb(87, 87, 87), rgb(0, 0, 0));
   font-family: sans-serif;
   display: flex;
   flex-direction: column;
@@ -17,6 +23,8 @@ body {
 h1 {
   font-size: 4em;
   margin: 0;
+  font-family: 'Monoton', sans-serif;
+  font-weight: lighter;
 }
 
 h2 {
@@ -35,7 +43,7 @@ h2 {
   color: white;
   justify-content: center;
   flex: 0 0 auto;
-  margin-right: 135px;
+  margin-right: 145px;
 }
 
 .box {
@@ -47,59 +55,136 @@ h2 {
   font-family: 'Permanent Marker', cursive;
 }
 
-.winner {
-  width: 100vw;
-  background-color: red;
-  font-size: 3em;
-  text-align: center;
-}
-
 main {
   display: flex;
   flex: 1;
+  gap: 20px;
+}
+
+#left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
+.container {
+  display: flex;
+
+}
+
+.game-modes {
+  width: 88px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 15px;
+}
+
+.game-modes button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  font-family: 'Alexandria', sans-serif;
+  font-size: 20px;
+}
+
+.popup {
+  position: relative;
+  display: inline-block;
+}
+
+.popup .popuptext {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  font-size: 14px;
+  width: 100px;
+  height: 50px;
+  background-color: black;
+  opacity: 60%;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  position: absolute;
+  z-index: 1;
+  top: -10%;
+  right: 110%;
+  padding: 4px;
+}
+
+.popup:hover .popuptext {
+  visibility: visible;
 }
 
 #scoreboard {
-  background-color: lightgrey;
-  width: 80px;
+  color: white;
+  font-family: 'Alexandria', sans-serif;
+  background-color: #00b2ca;
+  width: 70px;
   height: 100px;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   gap: 10px;
   border-radius: 30px;
-  padding: 10px;
+  padding: 10px 15px;
   font-size: 20px;
   font-weight: bold;
+
+}
+
+.left-score,
+.right-score {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 #turn-arrow {
-  color: red;
+  color: #ef767a;
   width: 35px;
   height: 80px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding-top: 3px;
 
   font-size: 40px;
   font-weight: bold;
 }
 
+.one-player {
+  background-color: rgb(149, 149, 149);
+}
 
-button {
-  background-color: white;
+.two-player {
+  background-color: #ef767a;
+  color: white;
+}
+
+#bottom {
+  display: flex;
+  justify-content: center;
+}
+
+.play-again {
+  color: white;
+  background-color: #ef767a;
   padding: 10px;
   font-size: 1.25em;
   margin: 5px;
   border-radius: 30px;
-  border: 5px black solid;
-
+  font-family: 'Jua', sans-serif;
+  border: none;
+  position: absolute;
+  left: 43%
 }
 
-button:hover {
-  border: 5px red solid;
+#bottom button:hover {
+  opacity: 75%;
 }
 
 .box {

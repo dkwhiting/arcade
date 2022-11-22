@@ -3,10 +3,11 @@ let body = document.querySelector('body')
 let board = document.querySelector('#board')
 let square = document.querySelector('.box')
 let allBoxes = Array.from(document.querySelectorAll('.box'))
+let playAgain = document.querySelector('.play-again')
 // let allX = document.querySelectorAll()
 
 let winBanner = document.querySelector('.winner')
-let banner = document.querySelector('#banner')
+let bottom = document.querySelector('#bottom')
 let turnArrow = document.querySelector('#turn-arrow')
 
 
@@ -19,6 +20,12 @@ let gameState = {
   ],
   counter: 0,
   winner: null
+}
+
+let score = {
+  x: 0,
+  o: 0,
+  tie: 0
 }
 
 
@@ -39,11 +46,7 @@ function newGame() {
     allBoxes[i].innerText = ''
   }
 
-  banner.removeChild(banner.firstChild)
-  banner.appendChild(document.createElement('h2'))
-  banner.firstChild.className = 'current-player'
-  banner.firstChild.innerText = `${gameState.players[0].toUpperCase()} goes first!`
-  body.removeChild(body.lastChild)
+  bottom.removeChild(bottom.firstChild)
   turnArrow.style.justifyContent = 'flex-start'
   turnArrow.style.visibility = 'visible'
 
@@ -66,9 +69,9 @@ function makeMove(event) {
     if (target.className.split(' ')[0] === 'box' && target.innerText === '') {
       target.innerText = gameState.players[0].toUpperCase()
       if (gameState.players[0] === 'x') {
-        target.style.color = '#ef767a';
+        target.style.color = '#ed9497';
       } else {
-        target.style.color = '#00b2ca';
+        target.style.color = '#45dcf0';
 
       }
       updateBoard();
@@ -84,7 +87,6 @@ function makeMove(event) {
         }
       }
       switchPlayers();
-      turn.innerText = `It's ${gameState.players[0].toUpperCase()}'s turn!`
       if (gameState.winner != null) {
         endGame()
       }
@@ -158,23 +160,30 @@ function deleteAllChildren(parent) {
   }
 }
 
-function endGame() {
-  const newDiv = document.createElement('div')
-  body.appendChild(newDiv)
-  body.lastChild.className = 'winner'
+function newButton(parent, cssClass, text) {
+  parent.appendChild(document.createElement('button'))
+  parent.lastChild.className = cssClass
+  parent.lastChild.innerText = text
+}
 
-  if (gameState.winner != null) {
-    body.lastChild.innerText = `${gameState.players[1].toUpperCase()} is the winner!!`
+function endGame() {
+
+  if (gameState.winner === 'x') {
+    score.x++
+    document.querySelector('.x-score').innerHTML = score.x
+  } else if (gameState.winner === 'o') {
+    score.o++
+    document.querySelector('.o-score').innerHTML = score.o
   } else {
-    body.lastChild.innerText = `It's a tie!!`
+    score.tie++
+    document.querySelector('.tie').innerHTML = score.tie
   }
 
-  deleteAllChildren(banner)
-  banner.appendChild(document.createElement('button'))
-  banner.firstChild.innerText = 'Play Again?'
 
   turnArrow.style.visibility = 'hidden'
 
-  let playAgain = document.querySelector('button')
+  deleteAllChildren(bottom)
+  newButton(bottom, 'play-again', 'PLAY AGAIN?')
+  let playAgain = document.querySelector('.play-again')
   playAgain.addEventListener('click', () => newGame())
 }

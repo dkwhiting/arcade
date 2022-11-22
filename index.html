@@ -11,18 +11,39 @@
 </head>
 
 <body>
-  <h1>Tic Tac Toe</h1>
-  <div id="banner">
-    <h2 class="current-player">X goes first!</h2>
-  </div>
+  <header>
+    <h1>
+      <span style="color: #ef767a">Tic</span>
+      <span style="color: #00b2ca">Tac</span>
+      <span style="color: #ef767a">Toe</span>
+    </h1>
+  </header>
   <main>
-    <div id="turn-arrow">
-      ►
-    </div>
-    <div id="scoreboard">
-      <div class="x-score">X:</div>
-      <div class="o-score">O: </div>
-      <div class="tie">Tie: </div>
+    <div id="left">
+      <div class="container">
+        <div id="turn-arrow">
+          ►
+        </div>
+        <div id="scoreboard">
+          <div class="left-score">
+            <div>X:</div>
+            <div>O:</div>
+            <div>Tie:</div>
+          </div>
+          <div class="right-score">
+            <div class="x-score">0</div>
+            <div class="o-score">0</div>
+            <div class="tie">0</div>
+          </div>
+        </div>
+      </div>
+      <div class="game-modes">
+        <button class="one-player popup">
+          1P
+          <span class="popuptext">Single-player mode coming soon</span>
+        </button>
+        <button class="two-player">2P</button>
+      </div>
     </div>
     <div id="board">
       <div class="box s00"></div>
@@ -36,6 +57,9 @@
       <div class="box s22"></div>
     </div>
   </main>
+  <div id="bottom">
+  </div>
+
 </body>
 
 </html>

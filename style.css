@@ -7,6 +7,12 @@ html {
   justify-content: center;
 }
 
+.right {
+  display: flex;
+  flex-direction: column;
+  width: 660px;
+}
+
 body {
   margin: 0;
   background-repeat: no-repeat;
@@ -166,6 +172,8 @@ main {
 }
 
 #bottom {
+  height: 55px;
+  width: 360px;
   display: flex;
   justify-content: center;
 }
@@ -179,8 +187,6 @@ main {
   border-radius: 30px;
   font-family: 'Jua', sans-serif;
   border: none;
-  position: absolute;
-  left: 43%
 }
 
 #bottom button:hover {

@@ -10,188 +10,6 @@ let winBanner = document.querySelector('.winner')
 let bottom = document.querySelector('#bottom')
 let turnArrow = document.querySelector('#turn-arrow')
 
-const winningMoves = {
-  0: [],
-  1: [],
-  2: [],
-  3: [],
-  4: [],
-  5: [],
-  6: [],
-  7: []
-}
-
-let handler = function (e) {
-  playerMove(e)
-}
-
-function computerMove() {
-  // debugger;
-
-  let count = 0
-  for (let key = 0; key <= 7; key++) {
-    console.log(winningMoves[key].toString().toString())
-    if (winningMoves[key].toString().match(/-oo/)) {
-      if (key === 0) {
-        document.querySelector('.s00').innerText = 'o'
-        document.querySelector('.s00').style.color = '#45dcf0'
-        gameState.board[0][0] = 'o'
-      }
-      if (key === 1) {
-        document.querySelector('.s10').innerText = 'o'
-        document.querySelector('.s10').style.color = '#45dcf0'
-        gameState.board[1][0] = 'o'
-      }
-      if (key === 2) {
-        document.querySelector('.s20').innerText = 'o'
-        document.querySelector('.s20').style.color = '#45dcf0'
-        gameState.board[2][0] = 'o'
-      }
-      if (key === 3) {
-        document.querySelector('.s00').innerText = 'o'
-        document.querySelector('.s00').style.color = '#45dcf0'
-        gameState.board[0][0] = 'o'
-      }
-      if (key === 4) {
-        document.querySelector('.s01').innerText = 'o'
-        document.querySelector('.s01').style.color = '#45dcf0'
-        gameState.board[0][1] = 'o'
-      }
-      if (key === 5) {
-        document.querySelector('.s02').innerText = 'o'
-        document.querySelector('.s02').style.color = '#45dcf0'
-        gameState.board[0][2] = 'o'
-      }
-      if (key === 6) {
-        document.querySelector('.s00').innerText = 'o'
-        document.querySelector('.s00').style.color = '#45dcf0'
-        gameState.board[0][0] = 'o'
-      }
-      if (key === 7) {
-        document.querySelector('.s02').innerText = 'o'
-        document.querySelector('.s02').style.color = '#45dcf0'
-        gameState.board[0][2] = 'o'
-      }
-      count++
-    }
-
-    if (winningMoves[key].toString().match(/o-o/)) {
-      if (key === 0) {
-        document.querySelector('.s01').innerText = 'o'
-        document.querySelector('.s01').style.color = '#45dcf0'
-        gameState.board[0][1] = 'o'
-      }
-      if (key === 1) {
-        document.querySelector('.s11').innerText = 'o'
-        document.querySelector('.s11').style.color = '#45dcf0'
-        gameState.board[1][1] = 'o'
-      }
-      if (key === 2) {
-        document.querySelector('.s21').innerText = 'o'
-        document.querySelector('.s21').style.color = '#45dcf0'
-        gameState.board[2][1] = 'o'
-      }
-      if (key === 3) {
-        document.querySelector('.s10').innerText = 'o'
-        document.querySelector('.s10').style.color = '#45dcf0'
-        gameState.board[1][0] = 'o'
-      }
-      if (key === 4) {
-        document.querySelector('.s11').innerText = 'o'
-        document.querySelector('.s11').style.color = '#45dcf0'
-        gameState.board[1][1] = 'o'
-      }
-      if (key === 5) {
-        document.querySelector('.s12').innerText = 'o'
-        document.querySelector('.s12').style.color = '#45dcf0'
-        gameState.board[1][2] = 'o'
-      }
-      if (key === 6) {
-        document.querySelector('.s11').innerText = 'o'
-        document.querySelector('.s11').style.color = '#45dcf0'
-        gameState.board[1][1] = 'o'
-      }
-      if (key === 7) {
-        document.querySelector('.s11').innerText = 'o'
-        document.querySelector('.s11').style.color = '#45dcf0'
-        gameState.board[1][1] = 'o'
-      }
-      count++
-    }
-
-    if (winningMoves[key].toString().match(/oo-/)) {
-      if (key === 0) {
-        document.querySelector('.s02').innerText = 'o'
-        document.querySelector('.s02').style.color = '#45dcf0'
-        gameState.board[0][2] = 'o'
-      }
-      if (key === 1) {
-        document.querySelector('.s12').innerText = 'o'
-        document.querySelector('.s12').style.color = '#45dcf0'
-        gameState.board[1][2] = 'o'
-      }
-      if (key === 2) {
-        document.querySelector('.s22').innerText = 'o'
-        document.querySelector('.s22').style.color = '#45dcf0'
-        gameState.board[2][2] = 'o'
-      }
-      if (key === 3) {
-        document.querySelector('.s20').innerText = 'o'
-        document.querySelector('.s20').style.color = '#45dcf0'
-        gameState.board[2][0] = 'o'
-      }
-      if (key === 4) {
-        document.querySelector('.s21').innerText = 'o'
-        document.querySelector('.s21').style.color = '#45dcf0'
-        gameState.board[2][1] = 'o'
-      }
-      if (key === 5) {
-        document.querySelector('.s22').innerText = 'o'
-        document.querySelector('.s22').style.color = '#45dcf0'
-        gameState.board[2][2] = 'o'
-      }
-      if (key === 6) {
-        document.querySelector('.s20').innerText = 'o'
-        document.querySelector('.s20').style.color = '#45dcf0'
-        gameState.board[2][0] = 'o'
-      }
-      if (key === 7) {
-        document.querySelector('.s22').innerText = 'o'
-        document.querySelector('.s22').style.color = '#45dcf0'
-        gameState.board[2][2] = 'o'
-      }
-      count++
-    }
-
-  }
-
-
-  while (count === 0) {
-    let x = Math.floor(Math.random() * 3);
-    let y = Math.floor(Math.random() * 3)
-    let move = gameState.board[x][y];
-    if (move === '-') {
-      document.querySelector(`.s${x}${y}`).innerText = 'o'
-      document.querySelector(`.s${x}${y}`).style.color = '#45dcf0'
-      gameState.board[x][y] = 'o'
-      count++
-    }
-  }
-
-  if (checkWinner() === true) {
-    gameState.winner = gameState.players[0]
-  }
-  if (gameState.winner != null) {
-    endGame()
-  }
-  if (gameState.counter >= 9) {
-    endGame()
-  }
-  switchPlayers();
-  board.addEventListener('click', handler)
-}
-
-
 let gameState = {
   players: ['x', 'o'],
   board: [
@@ -212,6 +30,308 @@ let score = {
     return this.x + this.o + this.tie
   }
 }
+
+const winningMoves = {
+  0: [],
+  1: [],
+  2: [],
+  3: [],
+  4: [],
+  5: [],
+  6: [],
+  7: []
+}
+
+let handler = function (e) {
+  playerMove(e)
+}
+
+
+let dashFirst = (player) => {
+  return RegExp(`-${player}${player}`)
+}
+
+let dashMid = (player) => {
+  return RegExp(`${player}-${player}`)
+}
+
+let dashLast = (player) => {
+  return RegExp(`${player}${player}-`)
+}
+
+function computerMove() {
+  // debugger;
+  let count = 0
+
+  function checkMove(player) {
+    for (let key = 0; key <= 7; key++) {
+      if (winningMoves[key].toString().match(dashFirst(player))) {
+        if (key === 0 && count === 0) {
+          if (document.querySelector('.s00').innerText === '') {
+            document.querySelector('.s00').innerText = 'o'
+            document.querySelector('.s00').style.color = '#45dcf0'
+            gameState.board[0][0] = 'o'
+            count++
+            gameState.counter++
+          }
+
+        }
+        if (key === 1 && count === 0) {
+          if (document.querySelector('.s10').innerText === '') {
+            document.querySelector('.s10').innerText = 'o'
+            document.querySelector('.s10').style.color = '#45dcf0'
+            gameState.board[1][0] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 2 && count === 0) {
+          if (document.querySelector('.s20').innerText === '') {
+            document.querySelector('.s20').innerText = 'o'
+            document.querySelector('.s20').style.color = '#45dcf0'
+            gameState.board[2][0] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 3 && count === 0) {
+          if (document.querySelector('.s00').innerText === '') {
+            document.querySelector('.s00').innerText = 'o'
+            document.querySelector('.s00').style.color = '#45dcf0'
+            gameState.board[0][0] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 4 && count === 0) {
+          if (document.querySelector('.s01').innerText === '') {
+            document.querySelector('.s01').innerText = 'o'
+            document.querySelector('.s01').style.color = '#45dcf0'
+            gameState.board[0][1] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 5 && count === 0) {
+          if (document.querySelector('.s02').innerText === '') {
+            document.querySelector('.s02').innerText = 'o'
+            document.querySelector('.s02').style.color = '#45dcf0'
+            gameState.board[0][2] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 6 && count === 0) {
+          if (document.querySelector('.s00').innerText === '') {
+            document.querySelector('.s00').innerText = 'o'
+            document.querySelector('.s00').style.color = '#45dcf0'
+            gameState.board[0][0] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 7 && count === 0) {
+          if (document.querySelector('.s02').innerText === '') {
+            document.querySelector('.s02').innerText = 'o'
+            document.querySelector('.s02').style.color = '#45dcf0'
+            gameState.board[0][2] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+      }
+
+      if (winningMoves[key].toString().match(dashMid(player))) {
+        if (key === 0 && count === 0) {
+          if (document.querySelector('.s01').innerText === '') {
+            document.querySelector('.s01').innerText = 'o'
+            document.querySelector('.s01').style.color = '#45dcf0'
+            gameState.board[0][1] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 1 && count === 0) {
+          if (document.querySelector('.s11').innerText === '') {
+            document.querySelector('.s11').innerText = 'o'
+            document.querySelector('.s11').style.color = '#45dcf0'
+            gameState.board[1][1] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 2 && count === 0) {
+          if (document.querySelector('.s21').innerText === '') {
+            document.querySelector('.s21').innerText = 'o'
+            document.querySelector('.s21').style.color = '#45dcf0'
+            gameState.board[2][1] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 3 && count === 0) {
+          if (document.querySelector('.s10').innerText === '') {
+            document.querySelector('.s10').innerText = 'o'
+            document.querySelector('.s10').style.color = '#45dcf0'
+            gameState.board[1][0] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 4 && count === 0) {
+          if (document.querySelector('.s11').innerText === '') {
+            document.querySelector('.s11').innerText = 'o'
+            document.querySelector('.s11').style.color = '#45dcf0'
+            gameState.board[1][1] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 5 && count === 0) {
+          if (document.querySelector('.s12').innerText === '') {
+            document.querySelector('.s12').innerText = 'o'
+            document.querySelector('.s12').style.color = '#45dcf0'
+            gameState.board[1][2] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 6 && count === 0) {
+          if (document.querySelector('.s11').innerText === '') {
+            document.querySelector('.s11').innerText = 'o'
+            document.querySelector('.s11').style.color = '#45dcf0'
+            gameState.board[1][1] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 7 && count === 0) {
+          if (document.querySelector('.s11').innerText === '') {
+            document.querySelector('.s11').innerText = 'o'
+            document.querySelector('.s11').style.color = '#45dcf0'
+            gameState.board[1][1] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+      }
+
+      if (winningMoves[key].toString().match(dashLast(player))) {
+        if (key === 0 && count === 0) {
+          if (document.querySelector('.s02').innerText === '') {
+            document.querySelector('.s02').innerText = 'o'
+            document.querySelector('.s02').style.color = '#45dcf0'
+            gameState.board[0][2] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 1 && count === 0) {
+          if (document.querySelector('.s12').innerText === '') {
+            document.querySelector('.s12').innerText = 'o'
+            document.querySelector('.s12').style.color = '#45dcf0'
+            gameState.board[1][2] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 2 && count === 0) {
+          if (document.querySelector('.s22').innerText === '') {
+            document.querySelector('.s22').innerText = 'o'
+            document.querySelector('.s22').style.color = '#45dcf0'
+            gameState.board[2][2] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 3 && count === 0) {
+          if (document.querySelector('.s20').innerText === '') {
+            document.querySelector('.s20').innerText = 'o'
+            document.querySelector('.s20').style.color = '#45dcf0'
+            gameState.board[2][0] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 4 && count === 0) {
+          if (document.querySelector('.s21').innerText === '') {
+            document.querySelector('.s21').innerText = 'o'
+            document.querySelector('.s21').style.color = '#45dcf0'
+            gameState.board[2][1] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 5 && count === 0) {
+          if (document.querySelector('.s22').innerText === '') {
+            document.querySelector('.s22').innerText = 'o'
+            document.querySelector('.s22').style.color = '#45dcf0'
+            gameState.board[2][2] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 6 && count === 0) {
+          if (document.querySelector('.s20').innerText === '') {
+            document.querySelector('.s20').innerText = 'o'
+            document.querySelector('.s20').style.color = '#45dcf0'
+            gameState.board[2][0] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+        if (key === 7 && count === 0) {
+          if (document.querySelector('.s22').innerText === '') {
+            document.querySelector('.s22').innerText = 'o'
+            document.querySelector('.s22').style.color = '#45dcf0'
+            gameState.board[2][2] = 'o'
+            count++
+            gameState.counter++
+          }
+        }
+      }
+
+    }
+  }
+
+  checkMove('o');
+  checkMove('x');
+
+
+  if (gameState.winner === null && gameState.counter < 10) {
+    while (count === 0) {
+      debugger;
+      let x = Math.floor(Math.random() * 3);
+      let y = Math.floor(Math.random() * 3)
+      let move = document.querySelector(`.s${[x]}${[y]}`).innerText;
+      if (move === '') {
+        document.querySelector(`.s${x}${y}`).innerText = 'o'
+        document.querySelector(`.s${x}${y}`).style.color = '#45dcf0'
+        gameState.board[x][y] = 'o'
+        count++
+        gameState.counter++
+      }
+    }
+  }
+
+  if (gameState.players[0] === 'x') {
+    turnArrow.style.justifyContent = 'flex-end'
+  } else {
+    turnArrow.style.justifyContent = 'flex-start'
+  }
+
+  if (checkWinner() === true) {
+    gameState.winner = gameState.players[0]
+  }
+  if (gameState.winner != null || gameState.counter >= 9) {
+    endGame()
+  }
+  console.log(gameState.counter)
+  switchPlayers();
+  board.addEventListener('click', handler)
+}
+
+
 
 function newGame() {
 
@@ -273,29 +393,33 @@ function playerMove(event) {
         target.style.color = '#45dcf0';
       }
 
-      //Update gameState & turn arrow//
-      if (gameState.players[0] === 'x') {
-        turnArrow.style.justifyContent = 'flex-end'
-      } else {
-        turnArrow.style.justifyContent = 'flex-start'
-      }
+      //Update game state//
       updateBoard();
       gameState.counter++
 
-      //Check if there's a winner//
-      if (checkWinner() === true) {
-        gameState.winner = gameState.players[0]
-      }
-      if (gameState.winner != null) {
-        endGame()
-      }
-      if (gameState.counter >= 9) {
-        endGame()
-      }
     }
   }
 
+  //Update turn arrow//
+  if (gameState.players[0] === 'x') {
+    turnArrow.style.justifyContent = 'flex-end'
+  } else {
+    turnArrow.style.justifyContent = 'flex-start'
+  }
+
+  //Check if there's a winner//
+  if (checkWinner() === true) {
+    gameState.winner = gameState.players[0]
+  }
+  if (gameState.winner != null) {
+    endGame()
+  }
+  if (gameState.counter >= 9) {
+    endGame()
+  }
+
   //Switch current player & remove event listener//
+  console.log(gameState.counter)
   switchPlayers();
 
   // console.dir(target);
@@ -318,6 +442,7 @@ board.addEventListener('click', handler)
 let regexMatch = (input) => {
   return (input.match(/xxx|ooo/) ? true : false)
 }
+
 
 function checkHorizontal() {
   let horizontal = []

@@ -7,13 +7,16 @@ html {
   justify-content: center;
 }
 
-.right {
+#right {
+  width: 240px;
   display: flex;
   flex-direction: column;
-  width: 660px;
+  align-items: center;
+  justify-content: center;
 }
 
 body {
+  width: 60 vw;
   margin: 0;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -27,7 +30,8 @@ body {
 }
 
 h1 {
-  font-size: 4em;
+  font-size: px;
+  text-align: center;
   margin: 0;
   font-family: 'Monoton', sans-serif;
   font-weight: lighter;
@@ -40,44 +44,49 @@ h2 {
 }
 
 #board {
+  width: 240px;
   background-color: black;
-  width: 320px;
   display: flex;
   flex-wrap: wrap;
   padding: 20px;
   border-radius: 30px;
   color: white;
   justify-content: center;
-  flex: 0 0 auto;
-  margin-right: 145px;
 }
 
 .box {
-  width: 100px;
-  height: 100px;
+  width: 75px;
+  height: 75px;
   border: 1px black solid;
-  font-size: 4.5em;
+  font-size: 3.5em;
   text-align: center;
   font-family: 'Permanent Marker', cursive;
+  flex: 0 1 auto;
 }
 
 main {
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex: 1;
-  gap: 20px;
+  position: relative;
+  right: 30px;
 }
 
 #left {
   display: flex;
+
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 20px;
+  margin-right: 20px;
+  flex: 1 2 auto;
 }
 
 .container {
   display: flex;
-
+  margin: 0;
 }
 
 .game-modes {
@@ -209,4 +218,23 @@ main {
 .s12 {
   border-top: 3px white solid;
   border-bottom: 3px white solid;
+}
+
+@media screen and (max-width: 480px) {
+  main {
+    flex-direction: column-reverse;
+    right: 0px;
+  }
+
+  #left {
+    flex-direction: row;
+  }
+
+  #bottom {
+    order: 1;
+  }
+
+  .popup .popuptext {
+    right: -50%
+  }
 }

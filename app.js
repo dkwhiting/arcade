@@ -4,8 +4,6 @@ let board = document.querySelector('#board')
 let square = document.querySelector('.box')
 let allBoxes = Array.from(document.querySelectorAll('.box'))
 let playAgain = document.querySelector('.play-again')
-// let allX = document.querySelectorAll()
-
 let winBanner = document.querySelector('.winner')
 let bottom = document.querySelector('#bottom')
 let turnArrow = document.querySelector('#turn-arrow')
@@ -63,7 +61,7 @@ let dashLast = (player) => {
 }
 
 function computerMove() {
-  debugger;
+
   let count = 0
 
   function checkMove(player) {
@@ -125,19 +123,19 @@ function computerMove() {
           }
         }
         if (key === 6 && count === 0) {
-          if (document.querySelector('.s00').innerText === '') {
-            document.querySelector('.s00').innerText = 'o'
-            document.querySelector('.s00').style.color = '#45dcf0'
-            gameState.board[0][0] = 'o'
+          if (document.querySelector('.s02').innerText === '') {
+            document.querySelector('.s02').innerText = 'o'
+            document.querySelector('.s02').style.color = '#45dcf0'
+            gameState.board[0][2] = 'o'
             count++
             gameState.counter++
           }
         }
         if (key === 7 && count === 0) {
-          if (document.querySelector('.s02').innerText === '') {
-            document.querySelector('.s02').innerText = 'o'
-            document.querySelector('.s02').style.color = '#45dcf0'
-            gameState.board[0][2] = 'o'
+          if (document.querySelector('.s00').innerText === '') {
+            document.querySelector('.s00').innerText = 'o'
+            document.querySelector('.s00').style.color = '#45dcf0'
+            gameState.board[0][0] = 'o'
             count++
             gameState.counter++
           }
@@ -300,10 +298,9 @@ function computerMove() {
   checkMove('o');
   checkMove('x');
 
-
-  if (gameState.winner === null && gameState.counter <= 9) {
+  if (gameState.winner === null && gameState.counter < 9) {
     while (count === 0) {
-      // debugger;
+
       let x = Math.floor(Math.random() * 3);
       let y = Math.floor(Math.random() * 3)
       let move = document.querySelector(`.s${[x]}${[y]}`).innerText;
@@ -333,8 +330,6 @@ function computerMove() {
   switchPlayers();
   board.addEventListener('click', clickHandler)
 }
-
-
 
 function newGame() {
   gameState = {
@@ -369,7 +364,6 @@ function newGame() {
   turnArrow.style.visibility = 'visible'
 
   if (computerPlayer === true && gameState.players[0] === 'o') {
-    debugger
     setTimeout(function () {
       computerMove();
     }, 1000);
@@ -383,22 +377,14 @@ function switchPlayers() {
   gameState.players.reverse();
 }
 
-
-
-
 function playerMove(event) {
-
-
   let target = event.target
   let updateBoard = () => {
     let x = target.className.split(' ')[1].split('')[1]
     let y = target.className.split(' ')[1].split('')[2]
     gameState.board[x][y] = gameState.players[0]
   }
-
-
   if (gameState.winner === null) {
-    // debugger;
 
     //Update the gameboard with X or O & remove event listener//
     if (target.className.split(' ')[0] === 'box' && target.innerText === '') {
@@ -435,9 +421,8 @@ function playerMove(event) {
       //Switch current player//
       console.log(gameState.counter)
       switchPlayers();
-
       //CPU move if single player//
-      if (computerPlayer === true && gameState.players[0] === 'o' && gameState.winner === null) {
+      if (computerPlayer === true && gameState.players[0] === 'o' && gameState.winner === null && gameState.counter < 9) {
         setTimeout(function () {
           computerMove();
         }, 1000);
@@ -449,9 +434,6 @@ function playerMove(event) {
     }
   }
 }
-
-
-
 
 function toggleOnePlayer() {
   if (computerPlayer === false) {
@@ -577,7 +559,6 @@ function newButton(parent, cssClass, text) {
 }
 
 function endGame() {
-  debugger
   if (gameState.winner === 'x') {
     score.x++
     document.querySelector('.x-score').innerHTML = score.x
@@ -595,5 +576,5 @@ function endGame() {
   deleteAllChildren(bottom)
   newButton(bottom, 'play-again', 'PLAY AGAIN?')
   let playAgain = document.querySelector('.play-again')
-  playAgain.addEventListener('click', newGame)
+  playAgain.addEventListener('click', () => newGame())
 }

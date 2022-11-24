@@ -112,6 +112,7 @@ main {
   border: none;
   font-family: 'Alexandria', sans-serif;
   font-size: 20px;
+  text-align: center;
 }
 
 .popup {
@@ -181,6 +182,7 @@ main {
 
 .inactive {
   background-color: rgb(149, 149, 149);
+  color: black;
 }
 
 .active {

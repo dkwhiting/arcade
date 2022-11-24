@@ -179,11 +179,11 @@ main {
   font-weight: bold;
 }
 
-.one-player {
+.inactive {
   background-color: rgb(149, 149, 149);
 }
 
-.two-player {
+.active {
   background-color: #ef767a;
   color: white;
 }

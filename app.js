@@ -9,6 +9,8 @@ let playAgain = document.querySelector('.play-again')
 let winBanner = document.querySelector('.winner')
 let bottom = document.querySelector('#bottom')
 let turnArrow = document.querySelector('#turn-arrow')
+let onePlayer = document.querySelector('.one-player')
+let twoPlayer = document.querySelector('.two-player')
 
 let gameState = {
   players: ['x', 'o'],
@@ -19,8 +21,9 @@ let gameState = {
   ],
   counter: 0,
   winner: null,
-  computerPlayer: true
 }
+
+let computerPlayer = true
 
 let score = {
   x: 0,
@@ -31,7 +34,7 @@ let score = {
   }
 }
 
-const winningMoves = {
+let winningMoves = {
   0: [],
   1: [],
   2: [],
@@ -42,7 +45,7 @@ const winningMoves = {
   7: []
 }
 
-let handler = function (e) {
+let clickHandler = function (e) {
   playerMove(e)
 }
 
@@ -60,7 +63,7 @@ let dashLast = (player) => {
 }
 
 function computerMove() {
-  // debugger;
+  debugger;
   let count = 0
 
   function checkMove(player) {
@@ -298,9 +301,9 @@ function computerMove() {
   checkMove('x');
 
 
-  if (gameState.winner === null && gameState.counter < 10) {
+  if (gameState.winner === null && gameState.counter <= 9) {
     while (count === 0) {
-      debugger;
+      // debugger;
       let x = Math.floor(Math.random() * 3);
       let y = Math.floor(Math.random() * 3)
       let move = document.querySelector(`.s${[x]}${[y]}`).innerText;
@@ -328,13 +331,12 @@ function computerMove() {
   }
   console.log(gameState.counter)
   switchPlayers();
-  board.addEventListener('click', handler)
+  board.addEventListener('click', clickHandler)
 }
 
 
 
 function newGame() {
-
   gameState = {
     players: ['x', 'o'],
     board: [
@@ -343,7 +345,18 @@ function newGame() {
       ['-', '-', '-']
     ],
     counter: 0,
-    winner: null
+    winner: null,
+  }
+
+  winningMoves = {
+    0: [],
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+    6: [],
+    7: []
   }
 
   for (i in allBoxes) {
@@ -354,11 +367,16 @@ function newGame() {
   if (score.scoreSum() % 2 === 1) { gameState.players.reverse() }
   if (score.scoreSum() % 2 === 1) { turnArrow.style.justifyContent = 'flex-end' } else { turnArrow.style.justifyContent = 'flex-start' }
   turnArrow.style.visibility = 'visible'
-  if (gameState.computerPlayer = true && gameState.players[0] === 'o') {
+
+  if (computerPlayer === true && gameState.players[0] === 'o') {
+    debugger
     setTimeout(function () {
       computerMove();
     }, 1000);
   }
+
+  board.addEventListener('click', clickHandler)
+
 }
 
 function switchPlayers() {
@@ -381,11 +399,10 @@ function playerMove(event) {
 
   if (gameState.winner === null) {
     // debugger;
-    //CPU move if single player//
 
-    //Update the gameboard with X or O//
+    //Update the gameboard with X or O & remove event listener//
     if (target.className.split(' ')[0] === 'box' && target.innerText === '') {
-      board.removeEventListener('click', handler)
+      board.removeEventListener('click', clickHandler)
       target.innerText = gameState.players[0].toUpperCase()
       if (gameState.players[0] === 'x') {
         target.style.color = '#ed9497';
@@ -397,47 +414,95 @@ function playerMove(event) {
       updateBoard();
       gameState.counter++
 
+      //Update turn arrow//
+      if (gameState.players[0] === 'x') {
+        turnArrow.style.justifyContent = 'flex-end'
+      } else {
+        turnArrow.style.justifyContent = 'flex-start'
+      }
+
+      //Check if there's a winner//
+      if (checkWinner() === true) {
+        gameState.winner = gameState.players[0]
+      }
+      if (gameState.winner != null) {
+        endGame()
+      }
+      if (gameState.counter >= 9) {
+        endGame()
+      }
+
+      //Switch current player//
+      console.log(gameState.counter)
+      switchPlayers();
+
+      //CPU move if single player//
+      if (computerPlayer === true && gameState.players[0] === 'o' && gameState.winner === null) {
+        setTimeout(function () {
+          computerMove();
+        }, 1000);
+
+      } else {
+        board.addEventListener('click', clickHandler)
+
+      }
     }
   }
-
-  //Update turn arrow//
-  if (gameState.players[0] === 'x') {
-    turnArrow.style.justifyContent = 'flex-end'
-  } else {
-    turnArrow.style.justifyContent = 'flex-start'
-  }
-
-  //Check if there's a winner//
-  if (checkWinner() === true) {
-    gameState.winner = gameState.players[0]
-  }
-  if (gameState.winner != null) {
-    endGame()
-  }
-  if (gameState.counter >= 9) {
-    endGame()
-  }
-
-  //Switch current player & remove event listener//
-  console.log(gameState.counter)
-  switchPlayers();
-
-  // console.dir(target);
-
-
-  if (gameState.computerPlayer = true && gameState.players[0] === 'o' && gameState.winner === null) {
-    setTimeout(function () {
-      computerMove();
-    }, 1000);
-  }
-  console.dir(target)
-  // console.dir(winningMoves)
-  // console.dir(checkHorizontal())
-  // console.dir(checkVertical())
-
 }
 
-board.addEventListener('click', handler)
+
+
+
+function toggleOnePlayer() {
+  if (computerPlayer === false) {
+    computerPlayer = true
+    onePlayer.classList.remove('inactive')
+    onePlayer.classList.add('active')
+    twoPlayer.classList.remove('active')
+    twoPlayer.classList.add('inactive')
+    turnArrow.style.justifyContent = 'flex-start'
+    score = {
+      x: 0,
+      o: 0,
+      tie: 0,
+      scoreSum() {
+        return this.x + this.o + this.tie
+      }
+    }
+    document.querySelector('.x-score').innerHTML = score.x
+    document.querySelector('.o-score').innerHTML = score.o
+    document.querySelector('.tie').innerHTML = score.tie
+    newGame();
+  }
+}
+
+function toggleTwoPlayer() {
+  if (computerPlayer === true) {
+    computerPlayer = false
+    twoPlayer.classList.remove('inactive')
+    twoPlayer.classList.add('active')
+    onePlayer.classList.remove('active')
+    onePlayer.classList.add('inactive')
+    turnArrow.style.justifyContent = 'flex-start'
+    score = {
+      x: 0,
+      o: 0,
+      tie: 0,
+      scoreSum() {
+        return this.x + this.o + this.tie
+      }
+    }
+    document.querySelector('.x-score').innerHTML = score.x
+    document.querySelector('.o-score').innerHTML = score.o
+    document.querySelector('.tie').innerHTML = score.tie
+    newGame();
+  }
+}
+
+
+onePlayer.addEventListener('click', toggleOnePlayer)
+twoPlayer.addEventListener('click', toggleTwoPlayer)
+board.addEventListener('click', clickHandler)
 
 let regexMatch = (input) => {
   return (input.match(/xxx|ooo/) ? true : false)
@@ -512,7 +577,7 @@ function newButton(parent, cssClass, text) {
 }
 
 function endGame() {
-
+  debugger
   if (gameState.winner === 'x') {
     score.x++
     document.querySelector('.x-score').innerHTML = score.x
@@ -530,5 +595,5 @@ function endGame() {
   deleteAllChildren(bottom)
   newButton(bottom, 'play-again', 'PLAY AGAIN?')
   let playAgain = document.querySelector('.play-again')
-  playAgain.addEventListener('click', () => newGame())
+  playAgain.addEventListener('click', newGame)
 }

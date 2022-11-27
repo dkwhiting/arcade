@@ -43,24 +43,118 @@ let winningMoves = {
   7: []
 }
 
-let clickHandler = function (e) {
-  playerMove(e)
+function newGame() {
+  gameState = {
+    players: ['x', 'o'],
+    board: [
+      ['-', '-', '-'],
+      ['-', '-', '-'],
+      ['-', '-', '-']
+    ],
+    counter: 0,
+    winner: null,
+  }
+
+  winningMoves = {
+    0: [],
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+    6: [],
+    7: []
+  }
+
+  for (i in allBoxes) {
+    allBoxes[i].innerText = ''
+  }
+
+  bottom.removeChild(bottom.firstChild)
+  if (score.scoreSum() % 2 === 1) { gameState.players.reverse() }
+  if (score.scoreSum() % 2 === 1) { turnArrow.style.justifyContent = 'flex-end' } else { turnArrow.style.justifyContent = 'flex-start' }
+  turnArrow.style.visibility = 'visible'
+
+  if (computerPlayer === true && gameState.players[0] === 'o') {
+    setTimeout(function () {
+      computerMove();
+    }, 1000);
+  }
+
+  board.addEventListener('click', clickHandler)
+
 }
 
+function playerMove(event) {
+  let target = event.target
+  let updateBoard = () => {
+    let x = target.className.split(' ')[1].split('')[1]
+    let y = target.className.split(' ')[1].split('')[2]
+    gameState.board[x][y] = gameState.players[0]
+  }
+  if (gameState.winner === null) {
 
-let dashFirst = (player) => {
-  return RegExp(`-${player}${player}`)
-}
+    //Update the gameboard with X or O & remove event listener//
+    if (target.className.split(' ')[0] === 'box' && target.innerText === '') {
+      board.removeEventListener('click', clickHandler)
+      target.innerText = gameState.players[0].toUpperCase()
+      if (gameState.players[0] === 'x') {
+        target.style.color = '#ed9497';
+      } else {
+        target.style.color = '#45dcf0';
+      }
 
-let dashMid = (player) => {
-  return RegExp(`${player}-${player}`)
-}
+      //Update game state//
+      updateBoard();
+      gameState.counter++
 
-let dashLast = (player) => {
-  return RegExp(`${player}${player}-`)
+      //Update turn arrow//
+      if (gameState.players[0] === 'x') {
+        turnArrow.style.justifyContent = 'flex-end'
+      } else {
+        turnArrow.style.justifyContent = 'flex-start'
+      }
+
+      //Check if there's a winner//
+      if (checkWinner() === true) {
+        gameState.winner = gameState.players[0]
+      }
+      if (gameState.winner != null) {
+        endGame()
+      }
+      if (gameState.counter >= 9) {
+        endGame()
+      }
+
+      //Switch current player//
+      console.log(gameState.counter)
+      switchPlayers();
+      //CPU move if single player//
+      if (computerPlayer === true && gameState.players[0] === 'o' && gameState.winner === null && gameState.counter < 9) {
+        setTimeout(function () {
+          computerMove();
+        }, 1000);
+
+      } else {
+        board.addEventListener('click', clickHandler)
+
+      }
+    }
+  }
 }
 
 function computerMove() {
+  let dashFirst = (player) => {
+    return RegExp(`-${player}${player}`)
+  }
+
+  let dashMid = (player) => {
+    return RegExp(`${player}-${player}`)
+  }
+
+  let dashLast = (player) => {
+    return RegExp(`${player}${player}-`)
+  }
 
   let count = 0
 
@@ -331,108 +425,8 @@ function computerMove() {
   board.addEventListener('click', clickHandler)
 }
 
-function newGame() {
-  gameState = {
-    players: ['x', 'o'],
-    board: [
-      ['-', '-', '-'],
-      ['-', '-', '-'],
-      ['-', '-', '-']
-    ],
-    counter: 0,
-    winner: null,
-  }
-
-  winningMoves = {
-    0: [],
-    1: [],
-    2: [],
-    3: [],
-    4: [],
-    5: [],
-    6: [],
-    7: []
-  }
-
-  for (i in allBoxes) {
-    allBoxes[i].innerText = ''
-  }
-
-  bottom.removeChild(bottom.firstChild)
-  if (score.scoreSum() % 2 === 1) { gameState.players.reverse() }
-  if (score.scoreSum() % 2 === 1) { turnArrow.style.justifyContent = 'flex-end' } else { turnArrow.style.justifyContent = 'flex-start' }
-  turnArrow.style.visibility = 'visible'
-
-  if (computerPlayer === true && gameState.players[0] === 'o') {
-    setTimeout(function () {
-      computerMove();
-    }, 1000);
-  }
-
-  board.addEventListener('click', clickHandler)
-
-}
-
 function switchPlayers() {
   gameState.players.reverse();
-}
-
-function playerMove(event) {
-  let target = event.target
-  let updateBoard = () => {
-    let x = target.className.split(' ')[1].split('')[1]
-    let y = target.className.split(' ')[1].split('')[2]
-    gameState.board[x][y] = gameState.players[0]
-  }
-  if (gameState.winner === null) {
-
-    //Update the gameboard with X or O & remove event listener//
-    if (target.className.split(' ')[0] === 'box' && target.innerText === '') {
-      board.removeEventListener('click', clickHandler)
-      target.innerText = gameState.players[0].toUpperCase()
-      if (gameState.players[0] === 'x') {
-        target.style.color = '#ed9497';
-      } else {
-        target.style.color = '#45dcf0';
-      }
-
-      //Update game state//
-      updateBoard();
-      gameState.counter++
-
-      //Update turn arrow//
-      if (gameState.players[0] === 'x') {
-        turnArrow.style.justifyContent = 'flex-end'
-      } else {
-        turnArrow.style.justifyContent = 'flex-start'
-      }
-
-      //Check if there's a winner//
-      if (checkWinner() === true) {
-        gameState.winner = gameState.players[0]
-      }
-      if (gameState.winner != null) {
-        endGame()
-      }
-      if (gameState.counter >= 9) {
-        endGame()
-      }
-
-      //Switch current player//
-      console.log(gameState.counter)
-      switchPlayers();
-      //CPU move if single player//
-      if (computerPlayer === true && gameState.players[0] === 'o' && gameState.winner === null && gameState.counter < 9) {
-        setTimeout(function () {
-          computerMove();
-        }, 1000);
-
-      } else {
-        board.addEventListener('click', clickHandler)
-
-      }
-    }
-  }
 }
 
 function toggleOnePlayer() {
@@ -481,60 +475,53 @@ function toggleTwoPlayer() {
   }
 }
 
-
-onePlayer.addEventListener('click', toggleOnePlayer)
-twoPlayer.addEventListener('click', toggleTwoPlayer)
-board.addEventListener('click', clickHandler)
-
-let regexMatch = (input) => {
-  return (input.match(/xxx|ooo/) ? true : false)
-}
-
-
-function checkHorizontal() {
-  let horizontal = []
-  for (let i in gameState.board) {
-    horizontal.push(gameState.board[i].join(''))
-    winningMoves[i] = horizontal[i]
-  }
-  return regexMatch(horizontal.join(' '))
-}
-
-function checkVertical() {
-  let vertical = []
-  let count = 0
-  for (let j = 0; j <= gameState.board.length - 1; j++) {
-    let string = ''
-    for (let i = 0; i <= gameState.board.length - 1; i++) {
-      string += gameState.board[i][j]
-    }
-    vertical.push(string)
-  }
-  winningMoves[count + 3] = vertical[count]
-  winningMoves[count + 4] = vertical[count + 1]
-  winningMoves[count + 5] = vertical[count + 2]
-  count++
-  return regexMatch(vertical.join(' '))
-}
-
-function checkDiagonal() {
-  let diagonal = []
-  let count = 0
-  let j = 2
-  for (let i = 0; i <= gameState.board.length - 1; i++) {
-    diagonal += gameState.board[i][j]
-    j--;
-  }
-  diagonal += ' '
-  for (let i = 0; i <= gameState.board.length - 1; i++) {
-    diagonal += gameState.board[i][i];
-  }
-  winningMoves[6] = diagonal.split(' ')[0]
-  winningMoves[7] = diagonal.split(' ')[1]
-  return regexMatch(diagonal)
-}
-
 function checkWinner() {
+  let regexMatch = (input) => {
+    return (input.match(/xxx|ooo/) ? true : false)
+  }
+
+  function checkHorizontal() {
+    let horizontal = []
+    for (let i in gameState.board) {
+      horizontal.push(gameState.board[i].join(''))
+      winningMoves[i] = horizontal[i]
+    }
+    return regexMatch(horizontal.join(' '))
+  }
+
+  function checkVertical() {
+    let vertical = []
+    let count = 0
+    for (let j = 0; j <= gameState.board.length - 1; j++) {
+      let string = ''
+      for (let i = 0; i <= gameState.board.length - 1; i++) {
+        string += gameState.board[i][j]
+      }
+      vertical.push(string)
+    }
+    winningMoves[count + 3] = vertical[count]
+    winningMoves[count + 4] = vertical[count + 1]
+    winningMoves[count + 5] = vertical[count + 2]
+    count++
+    return regexMatch(vertical.join(' '))
+  }
+
+  function checkDiagonal() {
+    let diagonal = []
+    let j = 2
+    for (let i = 0; i <= gameState.board.length - 1; i++) {
+      diagonal += gameState.board[i][j]
+      j--;
+    }
+    diagonal += ' '
+    for (let i = 0; i <= gameState.board.length - 1; i++) {
+      diagonal += gameState.board[i][i];
+    }
+    winningMoves[6] = diagonal.split(' ')[0]
+    winningMoves[7] = diagonal.split(' ')[1]
+    return regexMatch(diagonal)
+  }
+
   if (checkHorizontal()) {
     return true
   }
@@ -578,3 +565,12 @@ function endGame() {
   let playAgain = document.querySelector('.play-again')
   playAgain.addEventListener('click', () => newGame())
 }
+
+// EVENT LISTENERS //
+let clickHandler = function (e) {
+  playerMove(e)
+}
+
+onePlayer.addEventListener('click', toggleOnePlayer)
+twoPlayer.addEventListener('click', toggleTwoPlayer)
+board.addEventListener('click', clickHandler)
